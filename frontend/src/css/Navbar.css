@@ -1,0 +1,48 @@
+/* Navbar.css */
+.navbar {
+  background-color: #00274C; /* Michigan blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-title a {
+  color: #FFCB05; /* Michigan maize */
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.navbar-title a:hover {
+  color: #ffd700; /* lighter maize on hover */
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link,
+.navlink {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover,
+.navlink:hover {
+  background-color: #FFCB05;
+  color: #00274C;
+}
