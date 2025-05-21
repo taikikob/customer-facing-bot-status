@@ -14,3 +14,5 @@ function JobEntry({job}) {
 
     )
 }
+
+export default JobEntry
