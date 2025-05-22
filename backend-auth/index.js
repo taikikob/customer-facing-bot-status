@@ -15,24 +15,77 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 
-app.post('/api/token', async (req, res) => {
-    const AUTH_URL = process.env.AUTH_URL;
+const tokenCache = {
+    token: null,
+    expiresAt: 0
+};
 
-    const credentials = {
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD
-    };
+const getAuthToken = async () => {
+    const now = Date.now();
+    if (tokenCache.token && now < tokenCache.expiresAt) {
+        return tokenCache.token;
+    }
+
+    const response = await axios.post(process.env.AUTH_URL, {
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD
+    }, {
+    headers: { 'Content-Type': 'application/json' }
+    });
+    const token = response.data.token;
+    tokenCache.token = token;
+    tokenCache.expiresAt = now + 10 * 60 * 1000; // cache for 10 mins (adjust as needed)
+    return token;
+};
+
+const getTimeString = (minutesAgo) => {
+    const now = new Date();
+    const past = new Date(now.getTime() - minutesAgo * 60 * 1000);
+    return past.toISOString();
+}
+
+app.post('/api/jobs', async (req, res) => {
+    const { minBefore } = req.body;
 
     try {
-        const response = await axios.post(AUTH_URL, credentials, {
-            headers: { 'Content-Type': 'application/json' }
-        });
+    const token = await getAuthToken();
+    const JOBS_URL = process.env.JOBS_URL;
 
-        const token = response.data.token;
-        res.json({ token }); // send token back to frontend
-    } catch (err) {
-        console.error("Token fetch failed:", err.response?.data || err.message);
-        res.status(500).json({ error: 'Failed to get token' });
+    const filterPayload = {
+      filter: {
+        operator: "and",
+        operands: [
+          {
+            operator: "ge",
+            field: "startDateTime",
+            value: getTimeString(minBefore)
+          }
+        ]
+      },
+      page: {
+        offset: 0,
+        length: 10000
+      },
+      sort: [
+        { field: "deviceName", direction: "asc" }
+      ]
+    };
+
+    const response = await axios.post(
+        JOBS_URL,  // Use your real AA jobs endpoint
+        filterPayload,
+        {
+        headers: {
+            'X-Authorization': token,
+            'Content-Type': 'application/json'
+        }
+        }
+    );
+
+    res.json(response.data);
+    } catch (error) {
+    console.error('Job fetch error:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Failed to fetch jobs' });
     }
 });
 

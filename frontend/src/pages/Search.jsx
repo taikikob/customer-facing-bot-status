@@ -2,7 +2,7 @@ import HeaderRow from "../components/HeaderRow"
 import JobCounts from "../components/JobCounts"
 import "../css/Search.css"
 import { useState, useEffect } from "react";
-import { authenticate } from "../services/api";
+import { fetchJobs } from "../services/api";
 
 function Search() {
     const [searching, setSearching] = useState(false);
@@ -14,9 +14,7 @@ function Search() {
     const handleSearch = (event) => {
         /* Call API calling function here, using minBefore, statuses, devNum */
         event.preventDefault();
-        console.log(minBefore);
-        console.log(statuses);
-        console.log(devNum);
+        fetchJobs(minBefore);
     };
 
     const handleStatusChange = (event) => {
@@ -27,16 +25,6 @@ function Search() {
         );
     };
 
-    useEffect(()=>{
-        const token = localStorage.getItem('authToken');
-
-        if (!token) {
-            authenticate();
-        }
-        console.log(localStorage.getItem('authToken'))
-    }, [])
-
-    // create a form
     return (
         <>
             <form onSubmit={handleSearch} className="search-filter-form">
