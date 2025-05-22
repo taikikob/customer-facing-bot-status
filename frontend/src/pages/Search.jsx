@@ -2,6 +2,7 @@ import HeaderRow from "../components/HeaderRow"
 import JobCounts from "../components/JobCounts"
 import "../css/Search.css"
 import { useState, useEffect } from "react";
+import { authenticate } from "../services/api";
 
 function Search() {
     const [searching, setSearching] = useState(false);
@@ -25,6 +26,15 @@ function Search() {
             checked ? [...prev, value] : prev.filter((status) => status !== value)
         );
     };
+
+    useEffect(()=>{
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            authenticate();
+        }
+        console.log(localStorage.getItem('authToken'))
+    }, [])
 
     // create a form
     return (
