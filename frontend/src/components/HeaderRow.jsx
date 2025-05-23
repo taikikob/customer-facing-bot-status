@@ -1,6 +1,11 @@
+import "../css/HeaderRow.css"
+
 function HeaderRow() {
     return (
         <div className="header-row">
+            <div className="star-col">
+                Star
+            </div>
             <div>
                 Job Status
             </div>

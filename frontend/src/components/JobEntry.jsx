@@ -1,17 +1,35 @@
+import "../css/JobEntry.css"
+
 function JobEntry({job}) {
     return (
         <div className="job-entry">
-            <div>
-                Job Status
+            <div className="star-col">
+                <button>
+                    ☆
+                </button>
             </div>
             <div>
-                Automation Name
+                {job.status}
             </div>
             <div>
-                Activity Name
+                {job.automationName}
+            </div>
+            <div>
+                {job.currentBotName}
+            </div>
+            <div>
+                {job.startDateTime}
+            </div>
+            <div>
+                {job.endDateTime}
+            </div>
+            <div>
+                {job.type}
+            </div>
+            <div>
+                {job.deviceName}
             </div>
         </div>
-
     )
 }
 

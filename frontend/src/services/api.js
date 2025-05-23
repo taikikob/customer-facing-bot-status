@@ -13,7 +13,8 @@ export const fetchJobs = async (minBefore) => {
     }
 
     const data = await response.json();
-    console.log(data);
+    console.log(data.list);
+    return data.list;
   } catch (err) {
     console.error("Frontend job fetch error:", err);
     throw err;

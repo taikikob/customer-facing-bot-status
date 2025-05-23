@@ -1,19 +1,18 @@
-.header-row {
+.job-entry {
   display: flex;
-  background-color: #f0f0f0;
-  font-weight: bold;
-  border-bottom: 2px solid #ccc;
   padding: 10px 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.header-row > div {
+.job-entry > div {
   flex: 1;
-  text-align: left;
   padding: 8px 12px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #eee;
+  font-size: 14px;
+  overflow-wrap: anywhere;
 }
 
-.header-row > div:last-child {
+.job-entry > div:last-child {
   border-right: none;
 }
 

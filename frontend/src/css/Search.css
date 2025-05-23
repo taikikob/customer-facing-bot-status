@@ -1,62 +1,54 @@
-.search-filter-form {
-  max-width: 1400px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
-}
-
-.field-container {
+.controls {
   display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap; /* allows wrapping on smaller screens */
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin: 0 auto 16px auto;
+  align-items: flex-start;
 }
 
-.time-field,
-.status-checklist,
-.search-filter-form > div > div:last-child {
-  flex: 1;
-  min-width: 250px;
+.search-filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
 }
 
-.search-filter-form p {
-  margin-bottom: 0.5rem;
+.time-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-field p {
+  margin: 0 0 4px;
+  font-weight: 500;
   font-size: 0.95rem;
 }
 
-.search-filter-form input[type="number"] {
-    margin-top: 0.25rem;
-    margin-right: 0.5rem;
-    width: 220px;
-}
-.search-filter-form input[type="checkbox"] {
-  margin-top: 0.25rem;
-  margin-right: 0.5rem;
+.time-field input {
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 220px;
 }
 
-.status-checklist div {
-  margin-bottom: 0.5rem;
+.devNum-input input {
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 220px;  /* Ensures placeholder is fully visible */
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .search-button {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1.25rem;
-  font-size: 1rem;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 7px 14px;
+  height: 38px;
+  font-size: 14px;
 }
 
-.search-button:hover {
-  background-color: #3a78c2;
-}
-
-.button-container {
-  display: flex;
-  justify-content: flex-end;
+.display-options {
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  max-width: 500px;
+  flex: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
