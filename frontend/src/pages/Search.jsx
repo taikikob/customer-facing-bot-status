@@ -11,10 +11,20 @@ function Search({ jobs, setJobs }) {
     const [running, setRunning] = useState([]);
     const [failed, setFailed] = useState([]);
     const [showStarred, setShowStarred] = useState(false);
+    const [starred, setStarred] = useState(()=> {
+        const stored = localStorage.getItem("Starred");
+        return stored ? JSON.parse(stored) : [];
+    });
     const [statuses, setStatuses] = useState([]);
     const [devNum, setDevNum] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    
+    useEffect(()=> {
+        console.log(JSON.stringify(starred));
+        localStorage.setItem("Starred", JSON.stringify(starred));
+        console.log(localStorage.getItem("Starred"));
+    }, [starred])
 
     useEffect(()=>{
         // manipulate jobs list whenever jobs is updated
@@ -27,7 +37,10 @@ function Search({ jobs, setJobs }) {
 
     const refreshJobs = () => {
         console.log(showStarred);
+        console.log(starred);
     }
+
+    const isJobStarred = (jobId) => starred.some(jId => jId === jobId);
 
     return <div className="main">
             <div>
@@ -52,7 +65,7 @@ function Search({ jobs, setJobs }) {
                                         return job.deviceName && job.deviceName.includes(paddedDevNum);
                                     })
                                     .map((job) => (
-                                        <JobEntry job={job} key={job.id}/>
+                                        <JobEntry job={job} setStarred={setStarred} isStarred={isJobStarred(job.id)} key={job.id}/>
                                     ))}
                             </div>
                         ):null}
@@ -65,7 +78,7 @@ function Search({ jobs, setJobs }) {
                                         return job.deviceName && job.deviceName.includes(paddedDevNum);
                                 })
                                 .map((job) => (
-                                    <JobEntry job={job} key={job.id}/>
+                                    <JobEntry job={job} setStarred={setStarred} isStarred={isJobStarred(job.id)} key={job.id}/>
                                 ))}
                             </div>
                         ):null}
@@ -78,7 +91,7 @@ function Search({ jobs, setJobs }) {
                                         return job.deviceName && job.deviceName.includes(paddedDevNum);
                                 })
                                 .map((job) => (
-                                    <JobEntry job={job} key={job.id}/>
+                                    <JobEntry job={job} setStarred={setStarred} isStarred={isJobStarred(job.id)} key={job.id}/>
                                 ))}
                             </div>
                         ):null}
@@ -91,7 +104,7 @@ function Search({ jobs, setJobs }) {
                                         return job.deviceName && job.deviceName.includes(paddedDevNum);
                                 })
                                 .map((job) => (
-                                    <JobEntry job={job} key={job.id}/>
+                                    <JobEntry job={job} setStarred={setStarred} isStarred={isJobStarred(job.id)} key={job.id}/>
                                 ))}
                             </div>
                         ):null}

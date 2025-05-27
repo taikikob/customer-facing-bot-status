@@ -23,3 +23,21 @@
   flex: none;
   text-align: center;
 }
+
+.starred-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc; /* light gray when inactive */
+  transition: color 0.3s ease;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+.starred-btn:hover {
+  color: #888; /* slightly darker gray on hover */
+}
+
+.starred-btn.active {
+  color: #f1c40f; /* yellow when starred */
+}
