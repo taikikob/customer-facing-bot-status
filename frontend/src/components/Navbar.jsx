@@ -3,12 +3,11 @@ import "../css/Navbar.css"
 
 function Navbar() {
     return <nav className="navbar">
-        <div className="navbar-title">
-            <Link to="/">SSC Bot Status Page</Link>
+        <div>
+            <img src="/mich_off_logo.png" className="logo"/>
         </div>
-        <div className="navbar-links">
-            <Link to="/" className="nav-link">Search</Link>
-            <Link to="/starred" className="navlink">Starred</Link>
+        <div className="navbar-title">
+            SSC Bot Status Page
         </div>
     </nav>
 }

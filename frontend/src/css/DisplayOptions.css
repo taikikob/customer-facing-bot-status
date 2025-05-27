@@ -1,0 +1,12 @@
+.display-options-header {
+    font-size: large;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.devNum-input input {
+    width: 60px;  /* Ensures placeholder is fully visible */
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}

@@ -1,16 +1,15 @@
 .job-counts-container {
   display: flex;
-  gap: 16px;
-  padding: 16px;
-  background-color: #f8f9fa;
   border-radius: 8px;
   margin: 0 auto;
   text-align: center;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
 
 .job-counts-container > div {
+  flex-grow: 1;
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;

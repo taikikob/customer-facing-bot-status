@@ -1,54 +1,27 @@
-.controls {
+.main {
   display: flex;
-  justify-content: center;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin: 0 auto 16px auto;
-  align-items: flex-start;
+  height: 100%;
+  width: auto;
 }
 
-.search-filter-form {
+.jobs {
+  flex-grow: 1;
+  width: 100%;
+  overflow: auto;
+}
+
+.top {
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
-}
-
-.time-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.time-field p {
-  margin: 0 0 4px;
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.time-field input {
-  padding: 6px 10px;
-  font-size: 14px;
-  width: 220px;
-}
-
-.devNum-input input {
-  padding: 6px 10px;
-  font-size: 14px;
-  width: 220px;  /* Ensures placeholder is fully visible */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.search-button {
-  padding: 7px 14px;
-  height: 38px;
-  font-size: 14px;
-}
-
-.display-options {
-  padding: 12px;
-  border-radius: 6px;
+  border: 20px;
+  border-color: black;
   background-color: #f8f9fa;
-  max-width: 500px;
-  flex: 1;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-button {
+  width: 120px;
+  height: 60px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
 }

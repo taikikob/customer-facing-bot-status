@@ -38,14 +38,8 @@ const getAuthToken = async () => {
     return token;
 };
 
-const getTimeString = (minutesAgo) => {
-    const now = new Date();
-    const past = new Date(now.getTime() - minutesAgo * 60 * 1000);
-    return past.toISOString();
-}
-
 app.post('/api/jobs', async (req, res) => {
-    const { minBefore } = req.body;
+    const { timeString } = req.body;
 
     try {
     const token = await getAuthToken();
@@ -58,7 +52,7 @@ app.post('/api/jobs', async (req, res) => {
           {
             operator: "ge",
             field: "startDateTime",
-            value: getTimeString(minBefore)
+            value: timeString
           }
         ]
       },

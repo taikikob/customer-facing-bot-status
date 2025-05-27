@@ -1,0 +1,11 @@
+.control-bar {
+    padding: 10px;
+    background-color: #FFCB05;
+    height: 100%;
+    min-width: 320px;
+}
+
+.title {
+    font-size: large;
+    font-weight: bold;
+}

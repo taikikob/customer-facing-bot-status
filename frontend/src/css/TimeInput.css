@@ -1,0 +1,21 @@
+.search-filter-form {
+    display: flex;
+    gap: 20px;
+}
+
+#date, #time {
+    padding: 6px 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.search-button {
+  padding: 7px 14px;
+  height: 38px;
+  font-size: 14px;
+  border-radius: 4px;
+}
