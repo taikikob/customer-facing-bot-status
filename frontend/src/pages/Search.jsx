@@ -4,7 +4,7 @@ import JobCounts from "../components/JobCounts"
 import JobEntry from "../components/JobEntry";
 import "../css/Search.css"
 import { useState, useEffect } from "react";
-import { fetchJobs } from "../services/api";
+import { fetchJobs, refreshStarredJobs } from "../services/api";
 
 function Search({ jobs, setJobs }) {
     const [completed, setCompleted] = useState([]);
@@ -57,17 +57,15 @@ function Search({ jobs, setJobs }) {
         if (loading) return
         setLoading(true);
         try {
+            // update all jobs that were last fetched
             const time_fil_jobs = await fetchJobs(cur_time);
             setJobs(time_fil_jobs);
-            // update the starred jobs based on job id, check whether any ids in starred match jobs and replace starred jobs with updated job
-            // for fast lookup
-            const jobMap = new Map(time_fil_jobs.map(job => [job.id, job]));
-            setStarred(prevStarred =>
-                prevStarred.map(starredJob => {
-                    // If updated job exists, replace it; otherwise, keep the old one
-                    return jobMap.get(starredJob.id) || starredJob;
-                })
-            );
+            
+            // update all jobs in starred based on id
+            // TODO
+            let updated = await refreshStarredJobs(starred);
+            console.log(updated);
+            setStarred(updated);
         } catch (err) {
             console.error("Failed to refresh jobs:", err)
         } finally {

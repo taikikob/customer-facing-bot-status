@@ -44,7 +44,7 @@ app.post('/api/jobs', async (req, res) => {
     try {
     const token = await getAuthToken();
     const JOBS_URL = process.env.JOBS_URL;
-
+    console.log(timeString);
     const filterPayload = {
       filter: {
         operator: "and",
@@ -81,6 +81,30 @@ app.post('/api/jobs', async (req, res) => {
     console.error('Job fetch error:', error.response?.data || error.message);
     res.status(500).json({ error: 'Failed to fetch jobs' });
     }
+});
+
+app.get('/api/starred-jobs/:id', async (req, res) => {
+  const jobId = req.params.id;
+  const token = await getAuthToken();
+  try {
+    const response = await axios.get(
+      `${process.env.JOBS_BYID_URL}${jobId}`, 
+      {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': token,
+      },
+      }
+    );
+
+    res.json(response.data);
+  } catch (err) {
+    console.error(`Failed to fetch job ${jobId}:`, err.response?.data || err.message);
+    // Forward the actual error code if it exists
+    const status = err.response?.status || 500;
+    const message = err.response?.data || { error: 'Server error' };
+    res.status(status).json(message);
+  }
 });
 
 app.listen(PORT, () => {
