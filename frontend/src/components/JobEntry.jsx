@@ -5,9 +5,9 @@ function JobEntry({job, setStarred, isStarred}) {
     function onStarClick(e) {
         e.preventDefault();
         if (isStarred) {
-            setStarred(prev => prev.filter(starredJobIds => starredJobIds!== job.id));
+            setStarred(prev => prev.filter(starredJob => starredJob.id!== job.id));
         } else {
-            setStarred(prev => [...prev, job.id]);
+            setStarred(prev => [...prev, job]);
         }
     }
     

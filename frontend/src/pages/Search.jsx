@@ -4,6 +4,7 @@ import JobCounts from "../components/JobCounts"
 import JobEntry from "../components/JobEntry";
 import "../css/Search.css"
 import { useState, useEffect } from "react";
+import { fetchJobs } from "../services/api";
 
 function Search({ jobs, setJobs }) {
     const [completed, setCompleted] = useState([]);
@@ -20,11 +21,25 @@ function Search({ jobs, setJobs }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     
-    useEffect(()=> {
-        console.log(JSON.stringify(starred));
+    useEffect(() => {
         localStorage.setItem("Starred", JSON.stringify(starred));
-        console.log(localStorage.getItem("Starred"));
     }, [starred])
+
+    // when starred button is checked this useEffect runs
+    useEffect(() => {
+        if (showStarred) {
+            setCompleted(starred.filter(job => job.status === "COMPLETED"));
+            setWaiting(starred.filter(job => (job.status === "RUN_PAUSED" || job.status === "QUEUED" || job.status === "PENDING_EXECUTION")));
+            setRunning(starred.filter(job => (job.status === "UPDATE" || job.status === "DEPLOYED" || job.status === "RUNNING")));
+            setFailed(starred.filter(job => (job.status === "RUN_FAILED" || job.status === "UNKNOWN" || job.status === "RUN_ABORTED" || job.status === "RUN_TIMED_OUT" || job.status === "DEPLOY_FAILED")));
+        } else {
+            let filtered = jobs.filter(job => job.deviceName && job.deviceName.includes("SSC"));
+            setCompleted(filtered.filter(job => job.status === "COMPLETED"));
+            setWaiting(filtered.filter(job => (job.status === "RUN_PAUSED" || job.status === "QUEUED" || job.status === "PENDING_EXECUTION")));
+            setRunning(filtered.filter(job => (job.status === "UPDATE" || job.status === "DEPLOYED" || job.status === "RUNNING")));
+            setFailed(filtered.filter(job => (job.status === "RUN_FAILED" || job.status === "UNKNOWN" || job.status === "RUN_ABORTED" || job.status === "RUN_TIMED_OUT" || job.status === "DEPLOY_FAILED")));
+        }
+    }, [showStarred, starred])
 
     useEffect(()=>{
         // manipulate jobs list whenever jobs is updated
@@ -35,16 +50,36 @@ function Search({ jobs, setJobs }) {
         setFailed(filtered.filter(job => (job.status === "RUN_FAILED" || job.status === "UNKNOWN" || job.status === "RUN_ABORTED" || job.status === "RUN_TIMED_OUT" || job.status === "DEPLOY_FAILED")));
     },[jobs])
 
-    const refreshJobs = () => {
-        console.log(showStarred);
-        console.log(starred);
-    }
+    const refreshJobs = async () => {
+        // just need to refetch data, and update the starred jobs based on job id
+        const cur_time = localStorage.getItem("cur_time");
+        if (!cur_time) return;
+        if (loading) return
+        setLoading(true);
+        try {
+            const time_fil_jobs = await fetchJobs(cur_time);
+            setJobs(time_fil_jobs);
+            // update the starred jobs based on job id, check whether any ids in starred match jobs and replace starred jobs with updated job
+            // for fast lookup
+            const jobMap = new Map(time_fil_jobs.map(job => [job.id, job]));
+            setStarred(prevStarred =>
+                prevStarred.map(starredJob => {
+                    // If updated job exists, replace it; otherwise, keep the old one
+                    return jobMap.get(starredJob.id) || starredJob;
+                })
+            );
+        } catch (err) {
+            console.error("Failed to refresh jobs:", err)
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const isJobStarred = (jobId) => starred.some(jId => jId === jobId);
+    const isJobStarred = (jobId) => starred.some(job => job.id === jobId);
 
     return <div className="main">
             <div>
-                <ControlBar loading={loading} setJobs={setJobs} setError={setError} setLoading={setLoading} setShowStarred={setShowStarred} setStatuses={setStatuses} setDevNum={setDevNum}/>
+                <ControlBar loading={loading} setJobs={setJobs} setError={setError} setLoading={setLoading} starred_count={starred.length} setShowStarred={setShowStarred} setStatuses={setStatuses} setDevNum={setDevNum}/>
             </div>  
             <div className="jobs">
                 <div className="top">

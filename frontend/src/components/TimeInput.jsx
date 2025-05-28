@@ -16,6 +16,7 @@ function TimeInput({loading, setJobs, setError, setLoading}) {
 
         try {
             const time_filtered_jobs = await fetchJobs(isoString);
+            localStorage.setItem("cur_time", isoString);
             setJobs(time_filtered_jobs);
             setError(null);
         } catch (err){

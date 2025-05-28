@@ -1,5 +1,5 @@
 import "../css/DisplayOptions.css"
-function DisplayOptions({ setShowStarred, setStatuses, setDevNum }) {
+function DisplayOptions({ starred_count, setShowStarred, setStatuses, setDevNum }) {
     const handleStarDisplay = (event) => {
         const {checked} = event.target;
         setShowStarred(checked);
@@ -18,7 +18,7 @@ function DisplayOptions({ setShowStarred, setStatuses, setDevNum }) {
         <div className="display-options-body">
             <div className="show-starred">
                 <label>
-                    Starred
+                    Starred ({starred_count})
                     <input type="checkbox" onChange={handleStarDisplay}/>
                 </label>
             </div>
